@@ -1,0 +1,6 @@
+#!/bin/ksh
+echo "hello before 20 sec"
+sleep 20
+echo "Hello after 20 sec"
+
+exit 0
