@@ -1,6 +1,5 @@
-#include<stdio.h>
+#include"timeUtil.h"
 
-int main(){
-
-return 0;
+void recordTime(time_t *seconds){
+	time(seconds);
 }
