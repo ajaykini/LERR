@@ -19,6 +19,8 @@
 
 #define JB_MASK 0xFFFF //job mask
 
+#define JB_MAX 10
+
 typedef struct TJob{
 	pid_t jobID; //pid of the forked process
 	int flag; // additional data to go here (used for hash)
