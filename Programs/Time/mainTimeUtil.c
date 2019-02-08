@@ -1,10 +1,7 @@
 #include"timeUtil.h"
+#include"jobUtil.h"
 #include<string.h>
-#include<stdlib.h>
-#include<errno.h>
-#include<stdlib.h>
-#include<sys/wait.h>
-#include<unistd.h>
+
 
 #define COMMANDLEN 2048
 
@@ -14,11 +11,10 @@ Param1: char *str i.e string porinter holding the command + argument
 Param2: char ***retarg i.e return argument holding the tokenized argument list
 return: int i.e no of tokens created. 
 */
-
 int stripArgs(char *str,char ***retarg){
 
 	char *ptr,temp[COMMANDLEN],*tok;
-	int index=0,notok=1;
+	int index=0,notok=1;	
 
 	strcpy(temp,str);
 	*retarg=NULL;
@@ -84,6 +80,8 @@ int main(int argc, char *argv[])
 				}
 		}
 		else{
+			/*record a job here */
+			jobCreate(pid,JB_FRK);			
 			/*check in the parent on how the sub process executed*/
 			if(waitpid(pid,&status,0) > 0){
 				if(WIFEXITED(status) && !WEXITSTATUS(status))
@@ -101,12 +99,13 @@ int main(int argc, char *argv[])
 			else{
 				printf("Wait on child %d FAILED\n",pid);
 			}
-		}
-
+		}	
+		jobList();
 		/*collect the exit status if it completed successfully
 		collect the end time and provide the time difference*/
 		recordTime(&endtime);
 		printf("\nET : %ld\n",endtime);
+
 	}
 	else{
 		printf("Insufficient Parameter Error\n");
